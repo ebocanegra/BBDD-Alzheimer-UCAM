@@ -62,3 +62,8 @@ Route::delete('/api/empresas/{codigo}', "App\Http\Controllers\EmpresasController
 Route::post('/api/empresas', "App\Http\Controllers\EmpresasController@login");
 
 
+//Ruta para enviar emails
+
+Route::post('/api/EnviarCorreo',"App\Http\Controllers\EmailController@index");
+Route::post('/api/EnviarInforme',"App\Http\Controllers\EmailController@enviarInforme");
+

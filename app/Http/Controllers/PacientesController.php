@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\pacientes;
+use App\Models\HistorialesClinicos;
+
 
 class PacientesController extends Controller
 {
@@ -257,7 +259,7 @@ class PacientesController extends Controller
 
 
     
-    public function destroy($codigo)
+    /*public function destroy($codigo)
     {
         $paciente = pacientes::find($codigo);
 
@@ -268,6 +270,38 @@ class PacientesController extends Controller
         $paciente->delete();
 
         return response()->json(['message' => 'paciente eliminado correctamente']);
-    }
+    }*/
+
+	public function destroy($codigo)
+	{
+		// Buscar el paciente por su código
+		$paciente = Pacientes::find($codigo);
+
+		// Verificar si el paciente existe
+		if (!$paciente) {
+			return response()->json(['message' => 'Paciente no encontrado'], 404);
+		}
+
+		try {
+			// Obtener y eliminar el historial clínico asociado al paciente
+			$historialClinico = HistorialesClinicos::where('codigoPaciente', $codigo)->first();
+			if ($historialClinico) {
+				$historialClinico->delete();
+			}
+
+			// Eliminar el paciente
+			$paciente->delete();
+
+			// Responder con éxito
+			return response()->json(['message' => 'Paciente y su historial clínico eliminados correctamente']);
+		} catch (\Exception $e) {
+			// Deshacer la transacción en caso de error
+			\DB::rollBack();
+
+			// Responder con un mensaje de error
+			return response()->json(['message' => 'Error al eliminar el paciente y su historial clínico'], 500);
+		}
+	}
+
 
 }
