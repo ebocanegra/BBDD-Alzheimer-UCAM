@@ -57,6 +57,8 @@ class EmpresasController extends Controller
 			'cif' => 'required',
 			'telefono' => 'required',
 			'email' => 'required',
+			'direccionWeb' => 'required',
+			'codigoSeguridad' => 'required',
 			'codigoPostal' => 'required',
 			'direccion' => 'required',
 			'provincia' => 'required',
@@ -94,12 +96,6 @@ class EmpresasController extends Controller
     }
 
 
-
-
-
-
-
-
     public function update(Request $request, $codigo)
     {
         
@@ -118,6 +114,8 @@ class EmpresasController extends Controller
 		$nombre=$request->input('nombre');
 		$cif=$request->input('cif');
 		$email=$request->input('email');
+		$direccionWeb=$request->input('direccionWeb');
+		$codigoSeguridad=$request->input('codigoSeguridad');
 		$telefono=$request->input('telefono');
 		$direccion=$request->input('direccion');
 		$provincia=$request->input('provincia');
@@ -150,6 +148,20 @@ class EmpresasController extends Controller
 			if ($email !=null && $email!='')
 			{
 				$empresa->email=$email;
+				$bandera=true;
+			}
+
+			// Actualización parcial de datos.
+			if ($direccionWeb !=null && $direccionWeb!='')
+			{
+				$empresa->direccionWeb=$direccionWeb;
+				$bandera=true;
+			}
+
+			// Actualización parcial de datos.
+			if ($codigoSeguridad !=null && $codigoSeguridad!='')
+			{
+				$empresa->codigoSeguridad=$codigoSeguridad;
 				$bandera=true;
 			}
 
@@ -219,7 +231,7 @@ class EmpresasController extends Controller
 
 		// Método PUT actualizamos todos los campos.
 		// Comprobamos que recibimos todos.
-		if (!$nombre || !$cif || !$email || !$telefono || !$direccion || !$provincia || !$ciudad || !$codigoPostal || !$contrasena  || !$confContrasena)
+		if (!$nombre || !$cif || !$email || !$direccionWeb || !$codigoSeguridad || !$telefono || !$direccion || !$provincia || !$ciudad || !$codigoPostal || !$contrasena  || !$confContrasena)
 		{
 			// Se devuelve código 422 Unprocessable Entity.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
@@ -229,6 +241,8 @@ class EmpresasController extends Controller
 		$empresa->nombre=$nombre;
 		$empresa->cif=$cif;
 		$empresa->email=$email;
+		$empresa->direccionWeb=$direccionWeb;
+		$empresa->codigoSeguridad=$codigoSeguridad;
 		$empresa->telefono=$telefono;
 		$empresa->direccion=$direccion;
 		$empresa->provincia=$provincia;
@@ -246,9 +260,6 @@ class EmpresasController extends Controller
 
 
 
-
-
-
 	public function destroy($codigo)
     {
         $empresa = empresas::find($codigo);
@@ -261,10 +272,6 @@ class EmpresasController extends Controller
 
         return response()->json(['message' => 'Empresa eliminada correctamente']);
     }
-
-
-
-
 
 
 

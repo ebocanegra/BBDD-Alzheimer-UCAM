@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('cif', 255)->unique();
             $table->string('telefono');
             $table->string('email');
+            $table->string('direccionWeb');
+            $table->string('codigoSeguridad');
             $table->string('codigoPostal');
             $table->string('direccion');
             $table->string('provincia');

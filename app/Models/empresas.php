@@ -17,7 +17,7 @@ class empresas extends Authenticatable
     protected $primaryKey = 'codigo';
 
 	// Atributos que se pueden asignar de manera masiva.
-	protected $fillable = array('codigo', 'nombre', 'cif', 'telefono', 'email', 'codigoPostal', 'direccion', 'provincia', 'ciudad', 'contrasena', 'confContrasena');
+	protected $fillable = array('codigo', 'nombre', 'cif', 'telefono', 'email', 'direccionWeb', 'codigoSeguridad', 'codigoPostal', 'direccion', 'provincia', 'ciudad', 'contrasena', 'confContrasena');
 	
 
 	// Aquí ponemos los campos que no queremos que se devuelvan en las consultas.
