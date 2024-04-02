@@ -58,8 +58,10 @@ Route::delete('/api/medicos/{codigo}', "App\Http\Controllers\MedicosController@d
 Route::delete('/api/empresas/{codigo}', "App\Http\Controllers\EmpresasController@destroy");
 
 //Autenticacion
-
 Route::post('/api/empresas', "App\Http\Controllers\EmpresasController@login");
+
+//Comprobacion de codigo de seguridad del administrador
+Route::get('/api/administrador/{codigo}', "App\Http\Controllers\AdministradorController@comprobarCodigo");
 
 
 //Ruta para enviar emails
