@@ -65,6 +65,7 @@ class EmpresasController extends Controller
 			'ciudad' => 'required',
 			'contrasena' => 'required',
 			'confContrasena' => 'required',
+			'contrasenaCambiada' => 'required',
 		]);
 	
 		// Crear un nuevo paciente utilizando asignación en masa
@@ -123,6 +124,7 @@ class EmpresasController extends Controller
 		$codigoPostal=$request->input('codigoPostal');
 		$contrasena=$request->input('contrasena');
 		$confContrasena=$request->input('confContrasena');
+		$contrasenaCambiada=$request->input('contrasenaCambiada');
 
 
 		// Comprobamos si recibimos petición PATCH(parcial) o PUT (Total)
@@ -214,6 +216,12 @@ class EmpresasController extends Controller
 				$bandera=true;
 			}
 
+			if ($contrasenaCambiada != null && $contrasenaCambiada != '')
+			{
+				$empresa->contrasenaCambiada=$contrasenaCambiada;
+				$bandera=true;
+			}
+
 			if ($bandera)
 			{
 				// Grabamos el fabricante.
@@ -231,7 +239,7 @@ class EmpresasController extends Controller
 
 		// Método PUT actualizamos todos los campos.
 		// Comprobamos que recibimos todos.
-		if (!$nombre || !$cif || !$email || !$direccionWeb || !$codigoSeguridad || !$telefono || !$direccion || !$provincia || !$ciudad || !$codigoPostal || !$contrasena  || !$confContrasena)
+		if (!$nombre || !$cif || !$email || !$direccionWeb || !$codigoSeguridad || !$telefono || !$direccion || !$provincia || !$ciudad || !$codigoPostal || !$contrasena  || !$confContrasena || !$contrasenaCambiada)
 		{
 			// Se devuelve código 422 Unprocessable Entity.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
@@ -250,6 +258,7 @@ class EmpresasController extends Controller
 		$empresa->codigoPostal=$codigoPostal;
 		$empresa->contrasena=$contrasena;
 		$empresa->confContrasena=$confContrasena;
+		$empresa->contrasenaCambiada=$contrasenaCambiada;
 
 
 		// Grabamos la empresa

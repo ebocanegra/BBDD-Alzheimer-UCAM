@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('ciudad');
             $table->string('contrasena');
             $table->string('confContrasena');
+            $table->string('contrasenaCambiada');
 
             // Para que también cree automáticamente los campos timestamps (created_at, updated_at)
             $table->timestamps();

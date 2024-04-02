@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('provincia');
             $table->string('etapaAlzheimer');
             $table->string('fechaInscripcion');
+            $table->string('fechaNacimiento');
+            $table->string('consentimientoInformado');
             
             $table->string('cifEmpresa', 255); 
             $table->foreign('cifEmpresa')->references('cif')->on('empresas');

@@ -53,6 +53,8 @@ class PacientesController extends Controller
 			'etapaAlzheimer' => 'required',
 			'fechaInscripcion' => 'required',
 			'cifEmpresa' => 'required',
+			'fechaNacimiento' => 'required',
+			'consentimientoInformado' => 'required',
 		]);
 	
 		// Crear un nuevo paciente utilizando asignación en masa
@@ -116,6 +118,8 @@ class PacientesController extends Controller
 		$etapaAlzheimer=$request->input('etapaAlzheimer');
 		$fechaInscripcion=$request->input('fechaInscripcion');
 		$cifEmpresa=$request->input('cifEmpresa');
+		$fechaNacimiento=$request->input('fechaNacimiento');
+		$consentimientoInformado=$request->input('consentimientoInformado');
 
 		// Comprobamos si recibimos petición PATCH(parcial) o PUT (Total)
 		if ($request->method()=='PATCH')
@@ -213,6 +217,20 @@ class PacientesController extends Controller
 				$bandera=true;
 			}
 
+			// Actualización parcial de datos.
+			if ($fechaNacimiento !=null && $fechaNacimiento!='')
+			{
+				$paciente->fechaNacimiento=$fechaNacimiento;
+				$bandera=true;
+			}
+
+			// Actualización parcial de datos.
+			if ($consentimientoInformado !=null && $consentimientoInformado!='')
+			{
+				$paciente->consentimientoInformado=$consentimientoInformado;
+				$bandera=true;
+			}
+
 			if ($bandera)
 			{
 				// Grabamos el fabricante.
@@ -230,7 +248,7 @@ class PacientesController extends Controller
 
 		// Método PUT actualizamos todos los campos.
 		// Comprobamos que recibimos todos.
-		if (!$nombre || !$apellidos || !$nif || !$numSegSocial || !$correo || !$sexo || !$telefono || !$telefonoAuxiliar || !$direccion  || !$provincia || !$etapaAlzheimer || !$fechaInscripcion || !$cifEmpresa)
+		if (!$nombre || !$apellidos || !$nif || !$numSegSocial || !$correo || !$sexo || !$telefono || !$telefonoAuxiliar || !$direccion  || !$provincia || !$etapaAlzheimer || !$fechaInscripcion || !$cifEmpresa || !$fechaNacimiento || !$consentimientoInformado)
 		{
 			// Se devuelve código 422 Unprocessable Entity.
 			return response()->json(['errors'=>array(['code'=>422,'message'=>'Faltan valores para completar el procesamiento.'])],422);
@@ -250,6 +268,8 @@ class PacientesController extends Controller
 		$paciente->etapaAlzheimer=$etapaAlzheimer;
 		$paciente->fechaInscripcion=$fechaInscripcion;
 		$paciente->cifEmpresa=$cifEmpresa;
+		$paciente->fechaNacimiento=$fechaNacimiento;
+		$paciente->consentimientoInformado=$consentimientoInformado;
 
 		// Grabamos el fabricante
 		$paciente->save();
@@ -257,20 +277,6 @@ class PacientesController extends Controller
 
     }
 
-
-    
-    /*public function destroy($codigo)
-    {
-        $paciente = pacientes::find($codigo);
-
-        if (!$paciente) {
-            return response()->json(['message' => 'paciente no encontrado'], 404);
-        }
-
-        $paciente->delete();
-
-        return response()->json(['message' => 'paciente eliminado correctamente']);
-    }*/
 
 	public function destroy($codigo)
 	{
