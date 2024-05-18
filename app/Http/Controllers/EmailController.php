@@ -29,8 +29,7 @@ class EmailController extends Controller
       }
       
 
-      /*Funcion para enviar correos a otros gmails desde mi gmail,
-      Falta poder enviar el informe al correo*/
+      /*Funcion para enviar correos a otros gmails desde mi gmail*/
       public function enviarInforme(Request $request){
 
         $correo = $request->input('correo');
